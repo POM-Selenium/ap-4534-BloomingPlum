@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Authors{% endblock %}
+
+{% block content %}
+<h1>Authors</h1>
+
+<a href="/authors/create/" class="btn btn-primary">Add Author</a>
+
+{% for author in authors %}
+<div class="card">
+    <h3>{{ author.name }} {{ author.surname }}</h3>
+    <p>{{ author.patronymic }}</p>
+
+    {% if not author.books.exists %}
+        <a href="/authors/delete/{{ author.id }}/" class="btn btn-danger">Delete</a>
+    {% endif %}
+</div>
+{% empty %}
+<div class="empty-state">
+    No authors found
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Library{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Library</h1>
+
+{% if user.is_authenticated %}
+    <div class="card">
+        <h3>Hello, {{ user.first_name }} {{ user.last_name }}!</h3>
+        <p>You are logged in as <strong>{{ user.get_role_name }}</strong>.</p>
+        <br>
+        <a href="{% url 'book:book_list' %}" class="btn btn-primary">Browse Books</a>
+        {% if user.role == 1 %}
+            <a href="{% url 'users:user_list' %}" class="btn btn-secondary">Manage Users</a>
+        {% endif %}
+    </div>
+{% else %}
+    <div class="card">
+        <h3>Please log in or register to access the library.</h3>
+        <br>
+        <a href="{% url 'authentication:login' %}" class="btn btn-primary">Login</a>
+        <a href="{% url 'authentication:register' %}" class="btn btn-secondary">Register</a>
+    </div>
+{% endif %}
+{% endblock %}

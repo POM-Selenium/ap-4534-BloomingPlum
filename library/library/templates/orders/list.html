@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Orders{% endblock %}
+
+{% block content %}
+
+<h1>Orders</h1>
+
+<a href="/orders/create/" class="btn btn-primary">Create Order</a>
+<a href="/orders/my/" class="btn btn-primary">My Orders</a>
+
+{% for order in orders %}
+
+<div class="card">
+
+    <h3>Order #{{ order.id }}</h3>
+
+    <p><strong>User:</strong> {{ order.user }}</p>
+    <p><strong>Book:</strong> {{ order.book }}</p>
+    <p><strong>Created:</strong> {{ order.created_at }}</p>
+    <p><strong>Planned end:</strong> {{ order.plated_end_at }}</p>
+    <p><strong>End:</strong> {{ order.end_at }}</p>
+
+{% if not order.end_at and order.user == request.user %}
+    <a href="/orders/close/{{ order.id }}/" class="btn btn-danger">Close Order</a>
+{% endif %}
+
+</div>
+
+{% empty %}
+
+<div class="empty-state">
+    No orders found
+</div>
+
+{% endfor %}
+
+{% endblock %}

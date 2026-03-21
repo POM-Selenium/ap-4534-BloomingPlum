@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Register - Library{% endblock %}
+
+{% block content %}
+<h1>Register</h1>
+
+{% if errors %}
+<div class="errors">
+    {% for error in errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="card">
+    <form method="post" action="{% url 'authentication:register' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label for="first_name">First Name *</label>
+            <input type="text" id="first_name" name="first_name" maxlength="20"
+                   value="{{ first_name|default:'' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="last_name">Last Name *</label>
+            <input type="text" id="last_name" name="last_name" maxlength="20"
+                   value="{{ last_name|default:'' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="middle_name">Middle Name</label>
+            <input type="text" id="middle_name" name="middle_name" maxlength="20"
+                   value="{{ middle_name|default:'' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" maxlength="100"
+                   value="{{ email|default:'' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirm">Confirm Password *</label>
+            <input type="password" id="password_confirm" name="password_confirm" required>
+        </div>
+
+        <div class="form-group">
+            <label for="role">Role *</label>
+            <select id="role" name="role">
+                <option value="0" {% if role == 0 or role is None %}selected{% endif %}>Visitor (Guest)</option>
+                <option value="1" {% if role == 1 %}selected{% endif %}>Librarian</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a href="{% url 'authentication:login' %}" style="margin-left: 15px;">Already have an account? Login</a>
+    </form>
+</div>
+{% endblock %}

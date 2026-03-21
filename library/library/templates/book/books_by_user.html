@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Books for {{ profile_user.first_name }} - Library{% endblock %}
+
+{% block content %}
+<h1>Books for {{ profile_user.first_name }} {{ profile_user.last_name }}</h1>
+
+<h2>Currently Borrowed</h2>
+{% if active_orders %}
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Book</th>
+            <th>Borrowed On</th>
+            <th>Due Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in active_orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td><a href="{% url 'book:book_detail' order.book.id %}">{{ order.book.name }}</a></td>
+            <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+            <td>{{ order.plated_end_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">No active book orders.</div>
+{% endif %}
+
+<h2>Returned</h2>
+{% if returned_orders %}
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Book</th>
+            <th>Borrowed On</th>
+            <th>Returned On</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in returned_orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td><a href="{% url 'book:book_detail' order.book.id %}">{{ order.book.name }}</a></td>
+            <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+            <td>{{ order.end_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">No returned books.</div>
+{% endif %}
+
+<br>
+<a href="{% url 'users:user_detail' profile_user.id %}" class="btn btn-secondary">Back to User</a>
+<a href="{% url 'users:user_list' %}" class="btn btn-secondary">Back to Users</a>
+{% endblock %}

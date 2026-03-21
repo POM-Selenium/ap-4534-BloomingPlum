@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}User: {{ profile_user.first_name }} - Library{% endblock %}
+
+{% block content %}
+<h1>User Details</h1>
+
+<div class="card">
+    <h3>{{ profile_user.first_name }} {{ profile_user.middle_name }} {{ profile_user.last_name }}</h3>
+    <p><strong>ID:</strong> {{ profile_user.id }}</p>
+    <p><strong>Email:</strong> {{ profile_user.email }}</p>
+    <p>
+        <strong>Role:</strong>
+        {% if profile_user.role == 1 %}
+            <span class="badge badge-librarian">Librarian</span>
+        {% else %}
+            <span class="badge badge-visitor">Visitor</span>
+        {% endif %}
+    </p>
+    <p><strong>Active:</strong> {% if profile_user.is_active %}Yes{% else %}No{% endif %}</p>
+    <p><strong>Created:</strong> {{ profile_user.created_at }}</p>
+    <p><strong>Updated:</strong> {{ profile_user.updated_at }}</p>
+    <br>
+    <a href="{% url 'book:books_by_user' profile_user.id %}" class="btn btn-primary">View Borrowed Books</a>
+    <a href="{% url 'users:user_list' %}" class="btn btn-secondary">Back to Users</a>
+</div>
+{% endblock %}

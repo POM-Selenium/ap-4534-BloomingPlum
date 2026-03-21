@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}All Users - Library{% endblock %}
+
+{% block content %}
+<h1>All Users</h1>
+
+{% if users %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in users %}
+        <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.first_name }} {{ u.last_name }}</td>
+            <td>{{ u.email }}</td>
+            <td>
+                {% if u.role == 1 %}
+                    <span class="badge badge-librarian">Librarian</span>
+                {% else %}
+                    <span class="badge badge-visitor">Visitor</span>
+                {% endif %}
+            </td>
+            <td>{% if u.is_active %}Yes{% else %}No{% endif %}</td>
+            <td>
+                <a href="{% url 'users:user_detail' u.id %}">View</a> |
+                <a href="{% url 'book:books_by_user' u.id %}">Books</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">No users found.</div>
+{% endif %}
+{% endblock %}

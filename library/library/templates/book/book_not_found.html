@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Book Not Found{% endblock %}
+
+{% block content %}
+<h1>Book Not Found</h1>
+<div class="card">
+    <p>The requested book does not exist.</p>
+    <br>
+    <a href="{% url 'book:book_list' %}" class="btn btn-primary">Back to Books</a>
+</div>
+{% endblock %}

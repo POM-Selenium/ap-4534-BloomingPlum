@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}All Books - Library{% endblock %}
+
+{% block content %}
+<h1>Books</h1>
+
+<form method="get" action="{% url 'book:book_list' %}" class="filter-form">
+    <div class="form-group">
+        <label for="title">Filter by Title</label>
+        <input type="text" id="title" name="title" value="{{ title_filter|default:'' }}" placeholder="Book title...">
+    </div>
+    <div class="form-group">
+        <label for="author">Filter by Author</label>
+        <input type="text" id="author" name="author" value="{{ author_filter|default:'' }}" placeholder="Author name...">
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a href="{% url 'book:book_list' %}" class="btn btn-secondary">Clear</a>
+    </div>
+</form>
+
+{% if books %}
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Authors</th>
+            <th>Available</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>
+                {% if book.cover %}
+                    <img src="{{ book.cover.url }}" alt="" style="width: 70px; height: 85px; object-fit: cover; border-radius: 4px; vertical-align: middle; margin-right: 8px;">
+                {% endif %}
+                {{ book.name }}
+            </td>
+            <td>
+                {% for author in book.authors.all %}
+                    {{ author.name }} {{ author.surname }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    <em>No authors</em>
+                {% endfor %}
+            </td>
+            <td>{{ book.count }}</td>
+            <td><a href="{% url 'book:book_detail' book.id %}">View</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">No books found matching your criteria.</div>
+{% endif %}
+{% endblock %}

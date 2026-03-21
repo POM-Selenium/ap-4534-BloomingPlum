@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+
+<h1>My Orders</h1>
+
+{% for order in orders %}
+<div class="card">
+    <h3>Order #{{ order.id }}</h3>
+    <p><strong>Book:</strong> {{ order.book }}</p>
+    <p><strong>Created:</strong> {{ order.created_at }}</p>
+    <p><strong>Planned end:</strong> {{ order.plated_end_at }}</p>
+</div>
+{% empty %}
+<div class="empty-state">
+    No active orders
+</div>
+{% endfor %}
+
+{% endblock %}

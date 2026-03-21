@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Create Author{% endblock %}
+
+{% block content %}
+<h1>Create Author</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name">
+    </div>
+
+    <div class="form-group">
+        <label>Surname</label>
+        <input type="text" name="surname">
+    </div>
+
+    <div class="form-group">
+        <label>Patronymic</label>
+        <input type="text" name="patronymic">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+{% endblock %}

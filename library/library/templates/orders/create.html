@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Create Order{% endblock %}
+
+{% block content %}
+<h1>Create Order</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="card">
+        <label for="book_id">Book:</label>
+        <select name="book_id" id="book_id">
+            {% for book in books %}
+            <option value="{{ book.id }}">{{ book.name }}</option>
+            {% endfor %}
+        </select>
+
+        <br><br>
+
+        <label for="plated_end_at">Planned end date:</label>
+        <input type="date" name="plated_end_at" id="plated_end_at">
+
+        <br><br>
+
+        <button type="submit" class="btn btn-primary">Create Order</button>
+    </div>
+</form>
+{% endblock %}

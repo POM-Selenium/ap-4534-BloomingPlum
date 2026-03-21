@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}User Not Found{% endblock %}
+
+{% block content %}
+<h1>User Not Found</h1>
+<div class="card">
+    <p>The requested user does not exist.</p>
+    <br>
+    <a href="{% url 'users:user_list' %}" class="btn btn-primary">Back to Users</a>
+</div>
+{% endblock %}
